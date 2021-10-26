@@ -1,0 +1,34 @@
+Hacer un programa donde metamos datos en 2-4 columnas con datos separtados por ;
+
+nombreProducto; cantidad; precio; fecha
+
+utilzar función split para separar
+
+splitea un string por el caráter que le indico
+
+productos.nombreScanner.split(";")
+
+Utilizar:
+	PrintWriter
+	FileWriter
+	BufferedReader
+	FileReader
+
+Métodos:
+1) inicializar
+2) agregarProducto
+3) buscarProducto
+4) listarProducto
+5) calcularTotalPrecio
+6) borrar producto
+7) mayor números de produstos (máxi cantidad) 
+8) contador de productos
+
+Usar las diferentes capas
+
+Hacer diagramas de clases
+
+
+
+	
+	
