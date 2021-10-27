@@ -15,9 +15,9 @@ public interface IAccesoDatos {
 
     List<Producto> listar(String nombreFichero) throws LecturaDatosEx;
 
-    void escribir(Producto producto, String nombreFichero) throws AccesoDatosEx;
+    void escribir(Producto producto, String nombreFichero, boolean anexar) throws AccesoDatosEx;
 
-    void borrar(String producto, String nombreFichero) throws EscrituraDatosEx;
+    void borrar(String nombreFichero) throws EscrituraDatosEx;
 
     String buscar(String nombreFichero, String busqueda) throws LecturaDatosEx;
 

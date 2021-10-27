@@ -29,35 +29,50 @@ public class AccesoDatosImp implements IAccesoDatos {
         }
     }
 
+    ///////////////////////////////
     @Override
     public List<Producto> listar(String nombreFichero) throws LecturaDatosEx {
-        var archivo = new File(nombreFichero);
-        List<Producto> productosAL = new ArrayList<>();
-
+        //Archivo
+        File archivo = new File(nombreFichero);
+        //Creo un arraylist con los productos
+        List<Producto> productos = new ArrayList<>(); //almacena productos
+        String[] productoArray = new String[4];
         try {
-            var leer = new BufferedReader(new FileReader(archivo));
-            var lectura = leer.readLine();
+            //Declaro variable para entrar al archivo
+            BufferedReader entrada = new BufferedReader(new FileReader(archivo)); //Para que no se sobreescriba
+            String lectura = entrada.readLine(); // lectura = nombre;cantidad;precio;fecha
+            //Hasta que se acaben las lineas con productos
             while (lectura != null) {
-                productosAL.add(new Producto(lectura));
-                lectura = leer.readLine();
+                productoArray = lectura.split(";"); // producto = {nombre, cantidad, precio, fecha}
+                //parseamos los elementos
+                var nombre= productoArray[0];
+                var precio= Double.parseDouble(productoArray[1]);
+                var cantidad= Integer.parseInt(productoArray[2]);
+                var fecha= productoArray[3];
+                productos.add(new Producto(nombre,
+                        cantidad,
+                        precio,
+                        fecha)); //Se van añadiendo al array los productos
+                lectura = entrada.readLine();//Pasa de linea
             }
-            leer.close();
-        } catch (FileNotFoundException ex) {
-            ex.printStackTrace(System.out);
-            throw new LecturaDatosEx("Error al listar películas FNF");
-        } catch (IOException ex) {
-            ex.printStackTrace(System.out);
-            throw new LecturaDatosEx("Error al listar películas (IO)");
+            entrada.close();//Cierra
+        } catch (Exception e) {
+            e.printStackTrace(System.out);
+            throw new LecturaDatosEx("Error de lectura listando los productos");
         }
-        return productosAL;
+        return productos;
     }
 
     @Override
-    public void escribir(Producto producto, String nombreFichero) throws AccesoDatosEx {
+    public void escribir(Producto producto, String nombreFichero, boolean anexar) throws AccesoDatosEx {
         var archivo = new File(nombreFichero);
         try {
-            var escribir = new PrintWriter(new FileWriter(nombreFichero));
-            escribir.println(producto.getNombre());
+            var escribir = new PrintWriter(new FileWriter(nombreFichero, true));
+            escribir.println(producto.getNombre() + ";"
+                    + producto.getPrecio() + ";"
+                    + producto.getCantidad() + ";"
+                    + producto.getFecha());
+
             escribir.close();
         } catch (IOException ex) {
             ex.printStackTrace(System.out);
@@ -66,7 +81,7 @@ public class AccesoDatosImp implements IAccesoDatos {
     }
 
     @Override
-    public void borrar(String producto, String nombreFichero) throws EscrituraDatosEx {
+    public void borrar(String nombreFichero) throws EscrituraDatosEx {
         var archivo = new File(nombreFichero);
         if (archivo.exists()) {
             archivo.delete();
@@ -85,7 +100,7 @@ public class AccesoDatosImp implements IAccesoDatos {
             var lectura = leer.readLine();
             while (lectura != null) {
                 if (!lectura.equalsIgnoreCase(busqueda)) {
-                    mensaje = "El producto " + busqueda + " se encuentra en la lñinea " + cont + " del catálogo de productos";
+                    mensaje = "El producto " + busqueda + " se encuentra en la línea " + cont + " del catálogo de productos";
                     break;
                 }
                 lectura = leer.readLine();

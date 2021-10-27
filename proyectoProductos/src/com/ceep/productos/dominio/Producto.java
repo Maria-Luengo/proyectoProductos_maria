@@ -1,14 +1,11 @@
 
 package com.ceep.productos.dominio;
 
-import java.util.Date;
-
-
 public class Producto {
     private String nombre;
     private int cantidad;
     private double precio;
-    private Date fecha;
+    private String fecha;
 
     public Producto() {
     }
@@ -17,10 +14,8 @@ public class Producto {
         this();
         this.nombre = nombre;
     }
-    
-    
 
-    public Producto(String nombre, int cantidad, double precio, Date fecha) {
+    public Producto(String nombre, int cantidad, double precio, String fecha) {
         this();
         this.nombre = nombre;
         this.cantidad = cantidad;
@@ -52,11 +47,11 @@ public class Producto {
         this.precio = precio;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
