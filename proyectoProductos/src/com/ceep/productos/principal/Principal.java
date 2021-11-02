@@ -19,7 +19,7 @@ public class Principal {
         Scanner dato = new Scanner(System.in);
         int opcion = 0;
         while (true) {
-            System.out.println("-----MENU-----");
+            System.out.println("   -----MENU-----");
             System.out.println("1.- Iniciar catalogo");
             System.out.println("2.- Agregar producto");
             System.out.println("3.- Listar productos");
@@ -59,9 +59,13 @@ public class Principal {
                     System.out.println("Gracias!!");
                     return;
                 case 4:
-                    System.out.println("Introduce el producto qa buscar: ");
-                    var buscar = dato.nextLine();
+                    System.out.println("Introduce el producto a buscar: ");
+                    var buscar = dato.next();
                     catalogo.buscarProducto(nombreFichero, buscar);
+                    break;
+                case 6:
+                    System.out.println("El precion máximo es: ");
+                    catalogo.PrecioTotal(nombreFichero);
                     break;
 
                 default:

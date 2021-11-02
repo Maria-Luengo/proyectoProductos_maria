@@ -45,10 +45,10 @@ public class AccesoDatosImp implements IAccesoDatos {
             while (lectura != null) {
                 productoArray = lectura.split(";"); // producto = {nombre, cantidad, precio, fecha}
                 //parseamos los elementos
-                var nombre= productoArray[0];
-                var precio= Double.parseDouble(productoArray[1]);
-                var cantidad= Integer.parseInt(productoArray[2]);
-                var fecha= productoArray[3];
+                var nombre = productoArray[0];
+                var precio = Double.parseDouble(productoArray[1]);
+                var cantidad = Integer.parseInt(productoArray[2]);
+                var fecha = productoArray[3];
                 productos.add(new Producto(nombre,
                         cantidad,
                         precio,
@@ -92,19 +92,22 @@ public class AccesoDatosImp implements IAccesoDatos {
     @Override
     public String buscar(String nombreFichero, String busqueda) throws LecturaDatosEx {
         var archivo = new File(nombreFichero);
-        int cont = 1;
+        int cont = 0;
         String mensaje = "";
-
+        String[] producto = new String[4];
         try {
-            var leer = new BufferedReader(new FileReader(archivo));
-            var lectura = leer.readLine();
+            BufferedReader leer = new BufferedReader(new FileReader(archivo));
+            String lectura = leer.readLine(); // lectura = "nombre;precio;cantidad;fecha"
+            
             while (lectura != null) {
-                if (!lectura.equalsIgnoreCase(busqueda)) {
+                producto = lectura.split(";");
+                if (!busqueda.equalsIgnoreCase(producto[0])) {//osease la posicion 0 es el nombre
                     mensaje = "El producto " + busqueda + " se encuentra en la línea " + cont + " del catálogo de productos";
                     break;
                 }
-                lectura = leer.readLine();
                 cont++;
+                lectura = leer.readLine();
+                
             }
             if (lectura == null) {
                 mensaje = "El producto " + busqueda + " no está en el catálogo";
@@ -119,4 +122,27 @@ public class AccesoDatosImp implements IAccesoDatos {
         }
         return mensaje;
     }
+
+    @Override
+    public double precioTotal(String nombreFichero) throws LecturaDatosEx{
+        File archivo = new File(nombreFichero);
+        double total=0;
+        try {
+            BufferedReader entrada = new BufferedReader(new FileReader(archivo));
+            var lectura = entrada.readLine();
+            while (lectura != null) {
+                String[] productos = lectura.split(";");
+                total = total + Double.parseDouble(productos[2]);
+                lectura = entrada.readLine();
+            }
+            entrada.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace(System.out);
+                throw new LecturaDatosEx("Error dprecio total (FNF)");
+            } catch (IOException e) {
+                e.printStackTrace(System.out);
+            }
+        return total;
+    }
+
 }

@@ -20,5 +20,8 @@ public interface IAccesoDatos {
     void borrar(String nombreFichero) throws EscrituraDatosEx;
 
     String buscar(String nombreFichero, String busqueda) throws LecturaDatosEx;
-
+    
+    double precioTotal (String nombreFichero) throws LecturaDatosEx;
+    
+    
 }

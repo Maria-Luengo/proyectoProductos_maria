@@ -51,8 +51,8 @@ public class CatalogoProductosImp implements ICatalogoProductos {
         try {
             productos = this.DATOS.listar(nombreFichero);
             productos.forEach(producto -> {
-                System.out.println("Producto: " + producto.getNombre()
-                        + "\nnombre: "+producto.getCantidad()
+                System.out.println("nombre: " + producto.getNombre()
+                        + "\ncantidad: "+producto.getCantidad()
                         + "\nprecio: "+producto.getPrecio()
                         + "\nfecha: "+producto.getFecha());
             });
@@ -71,5 +71,16 @@ public class CatalogoProductosImp implements ICatalogoProductos {
             ex.printStackTrace(System.out);
         }
     }
+    
+    @Override
+    public void PrecioTotal(String nombreFichero) {
+        try {
+            System.out.println("Precio total: " + this.DATOS.precioTotal(nombreFichero)+"€");
+        } catch (LecturaDatosEx ex) {
+             ex.printStackTrace(System.out);
+        }
+
+    }
+    
 
 }
